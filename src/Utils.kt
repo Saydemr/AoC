@@ -14,3 +14,24 @@ fun readInput(name: String) = File("src", "$name.txt")
 fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray()))
     .toString(16)
     .padStart(32, '0')
+
+fun readUntilEmptyLine(input: List<String>): List<String> {
+    val result = mutableListOf<String>()
+    for (line in input) {
+        if (line.isEmpty()) {
+            break
+        }
+        result.add(line)
+    }
+    return result
+}
+
+fun parseDay05Input(input: List<String>): List<String> {
+    /**
+     * Parse the data in the following form
+     * three consecutive spaces correspond to an empty item
+     * one space is a separator
+     */
+    return input.map { it.replace("    ", " [ ]") }
+
+}
