@@ -35,3 +35,10 @@ fun parseDay05Input(input: List<String>): List<String> {
     return input.map { it.replace("    ", " [ ]") }
 
 }
+
+fun parseCommandLine(name: String): List<List<String>> {
+    return File("src", "$name.txt")
+        .readText(Charsets.UTF_8)
+        .split("$ ")
+        .map { it.trim().split("\n") }
+}
