@@ -16,7 +16,7 @@ fun main() {
     }
 
 
-    val input = readInput("../input6")
+    val input = readInput("../inputs/input6")
     println(uniqueSubstring(input[0],4))
     println(uniqueSubstring(input[0],14))
 }
