@@ -110,7 +110,7 @@ fun main() {
 
     }
 
-    val input = readInput("../input5")
+    val input = readInput("../inputs/input5")
     val less =  parseDay05Input(input)
     println(part1(less))
     println(part2(less))

@@ -24,7 +24,7 @@ fun main() {
             .count()
     }
 
-    val input = readInput("../input4")
+    val input = readInput("../inputs/input4")
     println(part1(input))
     println(part2(input))
 }
