@@ -1,9 +1,6 @@
-import kotlin.math.abs
-import kotlin.math.hypot
-import kotlin.math.sqrt
-
 fun main() {
 
+    var part2vals = mutableListOf<Int>()
     fun part1(input: List<String>): Int {
         var register = 1
         var registerNext = 0
@@ -18,6 +15,7 @@ fun main() {
 
         register += registerNext
         values.add(register)
+        part2vals = values
         
         val sequence = (0..220)
             .map { if ((it - 19) % 40 == 0) it+1 else 0 }
@@ -26,8 +24,24 @@ fun main() {
             .sumOf { it.first * it.second }
     }
 
+    fun part2(input: List<Int>): String {
+        var resString = ""
+        var CRTPosition = 0
+        input.forEach {
+            if (CRTPosition % 40 == 0) CRTPosition = 0
+            resString += if (CRTPosition in it-1 until it+2)
+                "#"
+            else
+                "."
+            CRTPosition++
+        }
+
+        return resString
+    }
+
     val input = readInput("../inputs/input10")
     println(part1(input))
+    println(part2(part2vals).chunked(40).joinToString("\n"))
 
 
 }
