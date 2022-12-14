@@ -2,13 +2,13 @@ import kotlin.math.floor
 
 open class Monkey {
     var id: Int = 0
-    var items: MutableList<Int> = mutableListOf()
+    var items: MutableList<Long> = mutableListOf()
     var operator: String = ""
     var operand : String = ""
-    var test : Int = 0
+    var test : Long = 0
     var passAction: Int = 0
     var failAction: Int = 0
-    var numInspected: Int = 0
+    var numInspected: Long = 0
 
     @Override
     override fun toString(): String {
@@ -25,7 +25,9 @@ fun readMonkey(monkeyInfo: MutableList<String>): Monkey {
         .toInt()
     monkey.items = monkeyInfo[1].trim()
         .replace("Starting items: ", "")
-        .split(", ").map { it.trim().toInt() }.toMutableList()
+        .split(", ")
+        .map { it.trim().toLong() }
+        .toMutableList()
     val operation = monkeyInfo[2]
         .trim()
         .replace("Operation: new = old ", "")
@@ -35,7 +37,7 @@ fun readMonkey(monkeyInfo: MutableList<String>): Monkey {
     monkey.test = monkeyInfo[3]
         .trim()
         .replace("Test: divisible by ", "")
-        .toInt()
+        .toLong()
 
     monkey.passAction = monkeyInfo[4].trim()
         .replace("If true: throw to monkey ", "")
@@ -48,42 +50,42 @@ fun readMonkey(monkeyInfo: MutableList<String>): Monkey {
     return monkey
 }
 
+var bigModulus = 1L
 
-fun worryLevelCalculator(worryLevel: Int, operator: String, operand: String): Int {
+fun worryLevelCalculator(worryLevel: Long, operator: String, operand: String): Long {
 
-    var operandInt = if (operand ==  "old") worryLevel else operand.toInt()
-    return when (operator) {
-        "+" -> floor(((worryLevel) + (operandInt  ) ) / 3.0 ).toInt()
-        "-" -> floor(((worryLevel) - (operandInt  ))  / 3.0 ).toInt()
-        "*" -> floor(((worryLevel) * (operandInt ))  / 3.0 ).toInt()
-        else -> worryLevel
+    val operandInt = if (operand ==  "old") worryLevel else operand.toLong()
+    val result = when (operator) {
+        "+" -> (worryLevel) + (operandInt)
+        else -> (worryLevel) * (operandInt)
     }
+    return result
 }
 
 fun main() {
 
     val monkeys = mutableListOf<Monkey>()
-
     readInput("../inputs/input11")
         .chunked(7)
         .forEach {
             monkeys.add(readMonkey(it.toMutableList()))
+            bigModulus *= monkeys.last().test
         }
 
-    for (i in 0..19)
+    for (i in 0..9999)
     {
         monkeys.forEach { monkey ->
             monkey.items.forEach {
                 val worryLevel = worryLevelCalculator(it, monkey.operator, monkey.operand)
-                if (worryLevel % monkey.test == 0) {
-                    monkeys[monkey.passAction].items.add(worryLevel)
-                } else {
-                    monkeys[monkey.failAction].items.add(worryLevel)
-                }
+                if ((worryLevel % monkey.test).toInt() == 0)
+                    monkeys[monkey.passAction].items.add((worryLevel % bigModulus))
+                else
+                    monkeys[monkey.failAction].items.add(worryLevel % bigModulus)
                 monkey.numInspected += 1
             }
             monkey.items.clear()
         }
+        monkeys.forEach { println("Monkey number: ${it.id} \nInspected ${it.numInspected} items") }
     }
 
     monkeys.map { it.numInspected }
@@ -91,7 +93,6 @@ fun main() {
         .takeLast(2)
         .reduce { acc, i -> acc * i }
         .let { println(it) }
-
 
 
 }
