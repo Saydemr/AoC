@@ -1,36 +1,73 @@
 import kotlin.math.abs
-import kotlin.math.hypot
-import kotlin.math.sqrt
+import kotlin.math.sign
+
+
+fun correct(vertex: Pair<Int,Int>) : Pair<Int,Int> {
+    return if (abs(vertex.first)  > 1 || abs(vertex.second) > 1)
+        Pair((vertex.first - sign(vertex.first.toDouble())).toInt(),
+            (vertex.second - sign(vertex.second.toDouble())).toInt())
+    else
+        vertex
+}
 
 fun main() {
 
-    val lookup = mapOf("L" to Pair(-1,0), "R" to Pair(1,0), "U" to Pair(0,1), "D" to Pair(0,-1))
-    val visitedCells = mutableSetOf<Pair<Int,Int>>()
-    visitedCells.add(Pair(0,0))
-    var currentPos = Pair(0,0)
+    val lookup = mapOf(
+        "L" to Pair(-1,0),
+        "R" to Pair(1,0),
+        "U" to Pair(0,1),
+        "D" to Pair(0,-1))
 
+    val visitedCells = mutableSetOf<Pair<Int,Int>>()
+
+
+    fun part2(input: List<List<String>>): Int {
+        // create a mutable list of 9 Pair(0,0)
+
+        visitedCells.clear()
+        val knotPositions = mutableListOf(
+            Pair(0, 0), Pair(0, 0), Pair(0, 0),
+            Pair(0, 0), Pair(0, 0), Pair(0, 0),
+            Pair(0, 0), Pair(0, 0), Pair(0, 0),
+            Pair(0, 0)
+        )
+
+        input.forEach {
+            val direction = lookup[it[0]]
+            val distance = it[1].toInt()
+
+            for (a in 0 until distance) {
+                knotPositions[0] = Pair(first = knotPositions[0].first + direction!!.first,
+                    second = knotPositions[0].second + direction.second )
+
+                for (index in 1 until knotPositions.size) {
+                    val diff = Pair(
+                        first = knotPositions[index].first - knotPositions[index - 1].first,
+                        second = knotPositions[index].second - knotPositions[index - 1].second
+                    )
+
+                    knotPositions[index] = Pair(
+                        first = knotPositions[index - 1].first + correct(diff).first,
+                        second = knotPositions[index - 1].second + correct(diff).second
+                    )
+                }
+                println(knotPositions)
+                visitedCells.add(knotPositions.last())
+            }
+
+
+        }
+
+        return visitedCells.size
+
+    }
 
     val input = readInput("../inputs/input9")
         .map { it.trim().split(" ") }
-        .map { it[0].repeat(it[1].toInt()) }
-        .joinToString(separator = "") { it }
-        .windowed(2)
-        .map { it.map { it2 -> lookup[it2.toString()]!! }
-            .reduce { acc, pair -> Pair(acc.first + pair.first, acc.second + pair.second) } }
-        .forEach {
-            if (it.first == 0 && it.second == 0)
-            else if ( hypot(it.first.toDouble(), it.second.toDouble()) == sqrt(5.0))
-                currentPos = Pair(currentPos.first + it.first, currentPos.second + it.second / 2)
-            else if ( hypot(it.first.toDouble(), it.second.toDouble()) == sqrt(2.0))
-                currentPos = Pair(currentPos.first + it.first, currentPos.second + it.second)
+        .toList()
 
-            print(currentPos)
-            println(hypot(it.first.toDouble(), it.second.toDouble()))
-            visitedCells.add(currentPos)
-        }
+    println("aaaaaa")
+    println(part2(input))
 
-
-    println(visitedCells.size)
-    println(input)
 
 }
