@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.7.22"
+    application
 }
 
 repositories {
@@ -16,4 +17,8 @@ tasks {
     wrapper {
         gradleVersion = "7.6"
     }
+}
+
+application {
+    mainClass.set("Day15Kt")
 }
