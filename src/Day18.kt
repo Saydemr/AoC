@@ -1,52 +1,70 @@
+import java.util.*
 import kotlin.math.abs
 
 fun manhattanDistance(a: Triple<Int, Int, Int>, b: Triple<Int, Int, Int>): Int {
     return abs(a.first - b.first) + abs(a.second - b.second) + abs(a.third - b.third)
 }
 
+val directions = listOf(
+    Triple(1, 0, 0),
+    Triple(-1, 0, 0),
+    Triple(0, 1, 0),
+    Triple(0, -1, 0),
+    Triple(0, 0, 1),
+    Triple(0, 0, -1)
+)
+
+
 fun main() {
 
-    val list = readInput("../inputs/input18")
+    val cubes = readInput("../inputs/input18")
         .map { it.trim().split(",") }
         .map { Triple(it[0].toInt(), it[1].toInt(), it[2].toInt()) }
+        .toSet()
 
 
-
-    val numNeighbors = mutableListOf<Int>()
-    list.forEach { current ->
-        val others = list.filter { it2 -> it2 != current }
-            .count {  manhattanDistance(it, current) <= 1 }
-        numNeighbors.add(6-others)
-
+    var numNeighbors = 0
+    cubes.forEach { current ->
+        numNeighbors += 6 - cubes.filter { it2 -> it2 != current }.count { manhattanDistance(it, current) <= 1 }
     }
 
-    // find trapped locations (no cube but 6 neighbors)
-    val minX = list.minBy { it.first }.first
-    val maxX = list.maxBy { it.first }.first
-    val minY = list.minBy { it.second }.second
-    val maxY = list.maxBy { it.second }.second
-    val minZ = list.minBy { it.third }.third
-    val maxZ = list.maxBy { it.third }.third
+    println(numNeighbors)
 
-    val trapped = mutableListOf<Triple<Int, Int, Int>>()
-    for (x in minX..maxX) {
-        for (y in minY..maxY) {
-            for (z in minZ..maxZ) {
-                val current = Triple(x, y, z)
-                if (list.none { it == current }) {
-                    val others = list.count {  manhattanDistance(it, current) <= 1 }
-                    if (6-others == 0) {
-                        trapped.add(current)
-                    }
-                }
+
+    // part 2
+    // find exterior surface
+    val minX = cubes.minBy { it.first }.first - 1
+    val maxX = cubes.maxBy { it.first }.first + 1
+    val minY = cubes.minBy { it.second }.second - 1
+    val maxY = cubes.maxBy { it.second }.second + 1
+    val minZ = cubes.minBy { it.third }.third - 1
+    val maxZ = cubes.maxBy { it.third }.third + 1
+
+    fun isInRange(a: Triple<Int, Int, Int>): Boolean {
+        return a.first in minX..maxX && a.second in minY..maxY && a.third in minZ..maxZ
+    }
+
+    val stack = Stack<Triple<Int, Int, Int>>()
+    stack.push(Triple(minX, minY, minZ))
+
+    val seen = mutableSetOf<Triple<Int, Int, Int>>()
+
+    while (stack.isNotEmpty()) {
+        val current = stack.pop()
+
+        if (!seen.contains(current) && !cubes.contains(current) && isInRange(current)) {
+            seen.add(current)
+            directions.forEach { dir ->
+                stack.push(Triple(current.first + dir.first, current.second + dir.second, current.third + dir.third))
             }
         }
     }
 
-    println(numNeighbors.sum())
-    println(numNeighbors.sum() - trapped.size*6)
+    var part2Neighbors = 0
+    seen.forEach { current ->
+        part2Neighbors += cubes.count { manhattanDistance(it, current) <= 1 }
+    }
 
-    val numAdjacent = mutableListOf<Int>()
-
+    println(part2Neighbors)
 
 }
