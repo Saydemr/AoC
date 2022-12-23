@@ -8,7 +8,7 @@ fun main() {
         val stackInput = input.subList(0, stackIndex-1)
         val numStacks = input.subList(stackIndex-1, stackIndex)
             .map { it.replace("  ", "")
-                .strip()
+                .trim()
                 .replace(" ", ",") }[0]
             .split(",")
             .map { it.toInt() }
@@ -65,7 +65,8 @@ fun main() {
         val numStacks = input.subList(stackIndex - 1, stackIndex)
             .map {
                 it.replace("  ", "")
-                    .strip().replace(" ", ",")
+                    .trim()
+                    .replace(" ", ",")
             }[0]
             .split(",")
             .map { it.toInt() }.last()
