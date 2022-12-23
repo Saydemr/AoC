@@ -20,5 +20,5 @@ tasks {
 }
 
 application {
-    mainClass.set("Day23Kt")
+    mainClass.set("Day14Kt")
 }
