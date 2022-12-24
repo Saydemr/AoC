@@ -1,8 +1,10 @@
+package src
+
 fun main() {
 
     val visibility = mutableListOf<MutableList<Boolean>>()
     val scenicScores = mutableListOf<Int>()
-    val input = readInput("../inputs/input8")
+    val input = readInput("input8")
         .map { it.trim() }
         .map { it.chunked(1)
             .map { it2 -> it2.toInt() } }

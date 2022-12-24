@@ -1,9 +1,11 @@
+package src
+
 fun main() {
 
     val walls = mutableSetOf<Pair<Int,Int>>()
     val sands = mutableSetOf<Pair<Int,Int>>()
 
-    readInput("../inputs/input14")
+    readInput("input14")
         .map { it.trim().split("->") }
         .map { it.map { nane -> nane.trim().split(",") }
             .map { list -> list.map { str -> str.toInt() } } }

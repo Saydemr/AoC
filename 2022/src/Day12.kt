@@ -1,9 +1,11 @@
+package src
+
 import kotlin.Double.Companion.POSITIVE_INFINITY
 import kotlin.math.min
 
 fun main() {
 
-    val mountain = readInput("../inputs/input12")
+    val mountain = readInput("input12")
         .map { it.trim().split("") }
         .map { it.filter { it2 -> it2 != "" } }
         .map { it.map { it2 -> it2.first() }.toMutableList() }

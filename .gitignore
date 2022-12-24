@@ -1,8 +1,9 @@
 .gradle
 .idea
 build
-src/**/*.txt
-
+# Removed input files as the writer of the puzzles
+# does not want them to be published
+**/**/*.txt
 
 # Added by cargo
 

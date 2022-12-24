@@ -1,3 +1,5 @@
+package src
+
 import kotlin.math.abs
 import kotlin.math.sign
 
@@ -87,7 +89,7 @@ fun main() {
         return visitedCells.size
     }
 
-    val input = readInput("../inputs/input9")
+    val input = readInput("input9")
         .map { it.trim().split(" ") }
         .toList()
 

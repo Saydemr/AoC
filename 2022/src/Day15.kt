@@ -1,5 +1,6 @@
+package src
+
 import kotlin.math.abs
-import kotlin.system.exitProcess
 
 val manhattanDistance = { x1 :Long, y1: Long, x2: Long, y2: Long ->
     abs(x1 - x2) + abs(y1 - y2)
@@ -7,12 +8,11 @@ val manhattanDistance = { x1 :Long, y1: Long, x2: Long, y2: Long ->
 
 fun main() {
 
-
     val row =  2_000_000L
     val banned = mutableSetOf<Pair<Long,Long>>()
     val beacons = mutableSetOf<Pair<Long,Long>>()
 
-    val sensorBeaconList = readInput("../inputs/input15")
+    val sensorBeaconList = readInput("input15")
         .map { it.trim().split("x=", "y=", " ", ",", ":") }
         .map { it.filter {  it2 -> it2.trim(); val regex = "-?[0-9]+(\\.[0-9]+)?".toRegex(); regex.matches(it2) } }
         .map { ; it.map { it2 -> it2.toLong() } }

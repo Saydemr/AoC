@@ -1,3 +1,5 @@
+package src
+
 import java.util.*
 import kotlin.math.abs
 
@@ -17,7 +19,7 @@ val directions = listOf(
 
 fun main() {
 
-    val cubes = readInput("../inputs/input18")
+    val cubes = readInput("input18")
         .map { it.trim().split(",") }
         .map { Triple(it[0].toInt(), it[1].toInt(), it[2].toInt()) }
         .toSet()
