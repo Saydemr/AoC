@@ -1,3 +1,5 @@
+package src
+
 fun main() {
 
     var part2vals = mutableListOf<Int>()
@@ -39,7 +41,7 @@ fun main() {
         return resString
     }
 
-    val input = readInput("../inputs/input10")
+    val input = readInput("input10")
     println(part1(input))
     println(part2(part2vals).chunked(40).joinToString("\n"))
 

@@ -1,3 +1,5 @@
+package src
+
 fun main() {
 
     fun part1(input: List<String>): Int {
@@ -24,7 +26,7 @@ fun main() {
             .count()
     }
 
-    val input = readInput("../inputs/input4")
+    val input = readInput("input4")
     println(part1(input))
     println(part2(input))
 }

@@ -1,3 +1,5 @@
+package src
+
 import java.util.Stack
 
 fun main() {
@@ -111,7 +113,7 @@ fun main() {
 
     }
 
-    val input = readInput("../inputs/input5")
+    val input = readInput("input5")
     val less =  parseDay05Input(input)
     println(part1(less))
     println(part2(less))

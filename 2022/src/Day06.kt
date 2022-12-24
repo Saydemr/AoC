@@ -1,3 +1,5 @@
+package src
+
 fun main() {
 
     fun uniqueSubstring(input: String, consecutive: Int): Int {
@@ -16,7 +18,7 @@ fun main() {
     }
 
 
-    val input = readInput("../inputs/input6")
+    val input = readInput("input6")
     println(uniqueSubstring(input[0],4))
     println(uniqueSubstring(input[0],14))
 }

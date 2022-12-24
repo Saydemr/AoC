@@ -1,3 +1,5 @@
+package src
+
 class NewMonkey {
     var id: String = ""
     var hasYelled: Boolean = false
@@ -24,13 +26,13 @@ class NewMonkey {
 
     @Override
     override fun toString(): String {
-        return "NewMonkey(id='$id', hasYelled=$hasYelled, operation='$operation', firstOperand='$firstOperand', secondOperand='$secondOperand', firstLong=$firstLong, secondLong=$secondLong, result=$result)"
+        return "src.NewMonkey(id='$id', hasYelled=$hasYelled, operation='$operation', firstOperand='$firstOperand', secondOperand='$secondOperand', firstLong=$firstLong, secondLong=$secondLong, result=$result)"
     }
 }
 
 fun main() {
     val monkeys = mutableListOf<NewMonkey>()
-    readInput("../inputs/input21").forEach {
+    readInput("input21").forEach {
         val monkeyInfo = it.split(" ", ":").filter { it2 -> it2 != "" }
         println(monkeyInfo)
         if (monkeyInfo.size == 2) {

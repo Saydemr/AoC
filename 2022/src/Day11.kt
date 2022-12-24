@@ -1,4 +1,4 @@
-import kotlin.math.floor
+package src
 
 open class Monkey {
     var id: Int = 0
@@ -12,7 +12,7 @@ open class Monkey {
 
     @Override
     override fun toString(): String {
-        return "Monkey(id=$id, items=$items, operator='$operator', operand='$operand', test=$test, passAction=$passAction, failAction=$failAction, numInspected=$numInspected)"
+        return "src.Monkey(id=$id, items=$items, operator='$operator', operand='$operand', test=$test, passAction=$passAction, failAction=$failAction, numInspected=$numInspected)"
     }
 
 }
@@ -20,7 +20,7 @@ open class Monkey {
 fun readMonkey(monkeyInfo: MutableList<String>): Monkey {
     val monkey = Monkey()
     monkey.id = monkeyInfo[0].trim()
-        .replace("Monkey ", "")
+        .replace("src.Monkey ", "")
         .replace(":","")
         .toInt()
     monkey.items = monkeyInfo[1].trim()
@@ -65,7 +65,7 @@ fun worryLevelCalculator(worryLevel: Long, operator: String, operand: String): L
 fun main() {
 
     val monkeys = mutableListOf<Monkey>()
-    readInput("../inputs/input11")
+    readInput("input11")
         .chunked(7)
         .forEach {
             monkeys.add(readMonkey(it.toMutableList()))
@@ -85,7 +85,7 @@ fun main() {
             }
             monkey.items.clear()
         }
-        monkeys.forEach { println("Monkey number: ${it.id} \nInspected ${it.numInspected} items") }
+        monkeys.forEach { println("src.Monkey number: ${it.id} \nInspected ${it.numInspected} items") }
     }
 
     monkeys.map { it.numInspected }

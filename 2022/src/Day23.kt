@@ -1,3 +1,5 @@
+package src
+
 import java.util.function.Predicate
 
 val cardinals = listOf(
@@ -20,7 +22,7 @@ var moveOrder = mutableListOf(
 
 fun main() {
 
-    var elfPositions = readInput("../inputs/input23")
+    var elfPositions = readInput("input23")
         .mapIndexed { yCoordinate, list ->
             list.mapIndexed { xCoordinate, char ->
                 if (char == '#') Pair(xCoordinate, -yCoordinate) else Pair(100,100) }
@@ -80,11 +82,4 @@ fun main() {
 
     println(((maxX + 1 - minX ) * (maxY + 1 - minY )) - elfPositions.size)
 
-
-
 }
-
-
-/**
- * part 1 : 2416 too low
- */
